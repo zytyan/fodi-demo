@@ -1122,7 +1122,8 @@
         }
 
         async function preCache(files, level) {
-            if (level > -1) return;
+            if (level > -1 && window.api.root === "") return;
+            if (level > 2) return;
             files.files.forEach(file => {
                 const parent = files.parent === '/' ? '' : files.parent;
                 const path = parent + '/' + file.name;

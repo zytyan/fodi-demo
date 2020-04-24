@@ -395,6 +395,7 @@
     <script>
         function createCORSRequest(method, url, timeout) {
             let xhr = new XMLHttpRequest();
+            xhr.request.headers['Access-Control-Allow-Origin'] = "*";
             if ('withCredentials' in xhr) {
                 xhr.open(method, url, true);
             } else if (typeof XDomainRequest !== 'undefined') {

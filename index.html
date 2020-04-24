@@ -14,6 +14,7 @@
         const currentRoot = new URLSearchParams(window.location.search).get('path') || "";
     </script>
     <meta charset="utf-8">
+<!--    <meta http-equiv="Access-Control-Allow-Origin" content="*" />-->
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
     <script src="//s0.pstatp.com/cdn/expire-1-M/ionicons/4.5.6/ionicons.js"></script>
     <script src="//s0.pstatp.com/cdn/expire-1-M/marked/0.6.2/marked.min.js"></script>
@@ -395,20 +396,13 @@
     <script>
         function createCORSRequest(method, url, timeout) {
             let xhr = new XMLHttpRequest();
-
-            if ('withCredentials' in xhr) {
-                xhr.open(method, url, true);
-            } else if (typeof XDomainRequest !== 'undefined') {
-                xhr = new XDomainRequest();
-                xhr.open(method, url);
-            } else {
-                xhr = null;
-            }
             if (!xhr) {
                 throw Error("看不懂就算了");
             }
+            xhr.open(method, url, true);
             xhr.timeout = timeout;
-            xhr.setRequestHeader('Access-Control-Allow-Origin', "*");
+
+            // xhr.setRequestHeader('access-control-allow-origin', "*");
             return xhr;
         }
 
@@ -426,7 +420,7 @@
                 console.log({
                     url: url,
                     data: data,
-                    times: times
+                    times: times,
                 });
                 if (times < 1) {
                     sendRequest(method, url, data, headers, callback, error, times + 1);
@@ -435,7 +429,7 @@
                 }
             };
             if (headers) {
-                for (key in headers) {
+                for (let key in headers) {
                     if (headers.hasOwnProperty(key)) {
                         xhr.setRequestHeader(key, headers[key]);
                     }
@@ -1282,6 +1276,58 @@
 <div class="header-wrapper">
     <div class="header">
         <ion-icon id="arrow-back" class="logo" name="arrow-back"></ion-icon>
+        <ion-icon id="arrow-forward" class="logo" name="arrow-forward"></ion-icon>
+        <ion-icon id="main-page" class="logo" name="folder"></ion-icon>
+        <div class="nav">
+                <span id="path">
+                </span>
+        </div>
+        <span class="site" id="nav-site">ONEDRIVE</span>
+    </div>
+</div>
+<div class="container">
+    <div class="main">
+        <div class="left">
+            <div id="tree-root">
+            </div>
+        </div>
+        <div class="right">
+            <div class="list-header">
+                <div class="row">
+                    <div class="file">
+                        <span class="name">ITEMS</span>
+                        <span class="time">TIME</span>
+                        <span class="size">SIZE</span>
+                    </div>
+                </div>
+            </div>
+            <div id="file-list">
+            </div>
+            <div class="markdown-body">
+                <div id="readme">
+                </div>
+            </div>
+            <div class="preview">
+                <div class="info">
+                    <div class="file-name"></div>
+                    <div class="btn download">下载</div>
+                    <div class="btn quote">引用</div>
+                    <div class="btn share">分享</div>
+                </div>
+                <div class="content"></div>
+            </div>
+            <div class="password-wrapper">
+                <div class="password">
+                    <input type="password">
+                    <button>提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>" name="arrow-back"></ion-icon>
         <ion-icon id="arrow-forward" class="logo" name="arrow-forward"></ion-icon>
         <ion-icon id="main-page" class="logo" name="folder"></ion-icon>
         <div class="nav">

@@ -7,11 +7,11 @@
          * SITE_NAME：站点名称
          */
         window.GLOBAL_CONFIG = {
-            SCF_GATEWAY: "https://weathered-bird-6dda.fodiy.workers.dev/",
+            SCF_GATEWAY: "https://weathered-bird-6dda.fodiy.workers.dev",
             SITE_NAME: "FODI",
             IS_CF: true
         };
-        const initialPath = new URLSearchParams(window.location.search).get('path') || window.api.root;
+        const currentRoot = new URLSearchParams(window.location.search).get('path') || "";
     </script>
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
@@ -587,7 +587,7 @@
                     node);
                 addTreeNodeListener(treeNodeWrapper.querySelector('.tree-node'), path);
                 return treeNodeWrapper;
-            }
+            };
 
             const paths = files.parent.split('/');
             let absolutePath = max => {
@@ -863,7 +863,7 @@
                                     if (!--unloadedResourceCount) {
                                         let option = {
                                             url: video
-                                        }
+                                        };
                                         if (type === 'flv') {
                                             option.type = 'flv';
                                         }
@@ -876,7 +876,7 @@
                                 })
                             });
                         }
-                    }
+                    };
                     const suffix = path.split('.').pop();
                     let content = document.querySelector('.content');
                     switch (previewHandler.fileType(suffix)) {
@@ -973,7 +973,7 @@
                                     r += '/' + arr[i];
                                 }
                                 return r;
-                            }
+                            };
                             previewHandler.copyTextContent(null,
                                 window.location.origin +
                                 window.location.pathname +
@@ -1099,13 +1099,13 @@
         }
 
         async function preCache(files, level) {
-            if (level > -1 && initialPath === "/") return;
+            // console.log(files);
+            if (level > -1 && (files.parent === "/"||currentRoot==="")) return;
             if (level > 2) return;
             files.files.forEach(file => {
                 const parent = files.parent === '/' ? '' : files.parent;
                 const path = parent + '/' + file.name;
                 if (!file.url) {
-                    // console.log('caching ' + path + ', level ' + level);
                     window.fileCache.set(path, true);
                     sendRequest(window.api.method,
                         window.api.url,
@@ -1224,7 +1224,7 @@
                 preview: false
             };
             window.fileCache = new Map();
-            
+            const initialPath = new URLSearchParams(window.location.search).get('path') || window.api.root;
             if (window.GLOBAL_CONFIG.IS_CF) {
                 window.api.accessToken = {
                     encrypted: '',
@@ -1250,6 +1250,7 @@
             }
         });
     </script>
+    <title>FODIjfiodsfjs</title>
 </head>
 
 <body hidden="hidden">

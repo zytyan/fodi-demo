@@ -395,7 +395,7 @@
     <script>
         function createCORSRequest(method, url, timeout) {
             let xhr = new XMLHttpRequest();
-            xhr.request.headers['Access-Control-Allow-Origin'] = "*";
+
             if ('withCredentials' in xhr) {
                 xhr.open(method, url, true);
             } else if (typeof XDomainRequest !== 'undefined') {
@@ -404,9 +404,11 @@
             } else {
                 xhr = null;
             }
-            if (xhr) {
-                xhr.timeout = timeout;
+            if (!xhr) {
+                throw Error("看不懂就算了");
             }
+            xhr.timeout = timeout;
+            xhr.setRequestHeader('Access-Control-Allow-Origin', "*");
             return xhr;
         }
 
